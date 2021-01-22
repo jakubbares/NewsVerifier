@@ -1,0 +1,33 @@
+.mode {
+  font-weight: normal;
+  font-size: 8px;
+  height: 28px;
+  min-width: 70px;
+  width: auto;
+}
+
+.button-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  min-height: 80px;
+  height: auto;
+}
+
+input {
+  padding: 0.07em !important;
+  font-size: 13px !important;
+}
+
+label {
+  top: -.55em !important;
+  font-size: 11px !important;
+}

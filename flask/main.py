@@ -1,7 +1,7 @@
 from app import create_app
 from flask import request
 from app.resources.articles import Articles
-from app.resources.resource import TestResource
+from app.resources.resource import Analysis
 app = create_app('config')
 from flask_cors import CORS, cross_origin
 CORS(app, resources={r"/*": {"origins": "http://www.elevenhacks.com*"}})
@@ -21,9 +21,9 @@ def after_request(response):
 def hello():
     return "<h1 style='color:blue'>Hello There!</h1>"
 
-@app.route('/test', methods=['GET'])
-def test():
-    return TestResource.test_ner()
+@app.route('/analyze', methods=['GET'])
+def analyze():
+    return Analysis.test_ner()
 
 @app.route('/test2', methods=['POST'])
 def test2():

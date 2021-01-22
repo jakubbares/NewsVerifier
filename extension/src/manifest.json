@@ -1,0 +1,43 @@
+{
+  "name": "Fakes no more",
+  "version": "1.0",
+  "description": "Ověřování zpráv",
+  "manifest_version": 2,
+  "icons": {
+    "16": "assets/icons/comp16.png",
+    "48": "assets/icons/comp48.png",
+    "128": "assets/icons/comp128.png"
+  },
+  "permissions": [
+    "activeTab",
+    "webNavigation",
+    "notifications",
+    "contextMenus",
+    "storage",
+    "tabs"
+  ],
+  "background": {
+    "scripts": [
+      "background.js",
+      "runtime.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["url-change.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    "elements.js"
+  ],
+  "browser_action": {
+    "default_icon" : "assets/icons/comp128.png",
+    "default_title": "Fakes no more",
+    "default_popup": "index.html"
+  },
+  "content_security_policy": "script-src 'self' https://cdn.firebase.com https://*.firebaseio.com; object-src 'self'"
+
+
+
+}

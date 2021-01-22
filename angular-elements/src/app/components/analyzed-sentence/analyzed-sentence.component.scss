@@ -1,0 +1,19 @@
+.block {
+  width: 650PX;
+  border: 1px darkgray;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  font-size: 20px;
+}
+
+.domain {
+  font-weight: bold;
+}
+
+.text {
+  font-size: 17px;
+}

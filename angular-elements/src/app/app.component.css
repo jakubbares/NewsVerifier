@@ -1,0 +1,32 @@
+.sentences-container {
+  display: block;
+}
+
+.dot {
+  height: 11px;
+  width: 30px;
+  background: black;
+  margin-bottom: 10px;
+}
+
+.fixed-wrapper {
+  background-color: rgba(110,130,130,.75) !important;
+  position: fixed;
+  right: 0;
+  left: 0;
+  top: 20%;
+  margin: auto;
+  min-width: 80%;
+  max-width: 800px;
+  width: auto;
+  overflow-y: scroll;
+  z-index: 9999999999999999;
+}
+
+.wrapper {
+  height: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: inherit;
+}
