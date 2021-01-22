@@ -1,0 +1,135 @@
+.idea
+./idea
+
+
+saved_files
+
+#Flask
+migrations/
+sample_data/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*,cover
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+#PyCharm
+.idea/
+.idea
+API/.idea/
+wiki/.idea/
+*.xml
+models_root/110-France/logfile.txt
+models_root/109-Spain/logfile.txt
+models_root/106-Israel/logfile.txt
+models_root/50-Romania/logfile.txt
+models_root/47-Azerbaijan/logfile.txt
+models_root/45-Belgium/logfile.txt
+models_root/43-Austria/logfile.txt
+models_root/39-England/logfile.txt
+models_root/37-France/logfile.txt
+models_root/36-Denmark/logfile.txt
+models_root/35-Turkey/logfile.txt
+models_root/196-Armenia/logfile.txt
+models_root/139-Switzerland/logfile.txt
+models_root/138-Cyprus/logfile.txt
+models_root/128-Portugal/logfile.txt
+models_root/128-England/logfile.txt
+models_root/126-Portugal/logfile.txt
+models_root/123-England/logfile.txt
+models_root/115-Albania/logfile.txt
+models_root/76-England/logfile.txt
+models_root/75-Bulgaria/logfile.txt
+models_root/70-Finland/logfile.txt
+models_root/63-Ireland/logfile.txt
+models_root/60-Serbia/logfile.txt
+models_root/56-Latvia/logfile.txt
+models_root/55-Estonia/logfile.txt
+models_root/52-Sweden/logfile.txt
+models_root/330-Montenegro/logfile.txt
+models_root/24-Italy/logfile.txt
+models_root/226-Czech/logfile.txt
+models_root/22-Belarus/logfile.txt
+models_root/21-Greece/logfile.txt
+models_root/21-Grece/logfile.txt
+models_root/207-BosniaHerzegovina/logfile.txt
+models_root/200-Belgium/logfile.txt
+models_root/20-Spain/logfile.txt
+models_root/98-Lithuania/logfile.txt
+models_root/97-Slovenia/logfile.txt
+models_root/91-Ukraine/logfile.txt
+models_root/86-Norway/logfile.txt
+models_root/84-Denmark/logfile.txt
+models_root/82-Czech/logfile.txt
+models_root/80-Italy/logfile.txt
+models_root/78-Switzerland/logfile.txt
+models_root/31-Germany/logfile.txt
+models_root/302-Slovakia/logfile.txt
+models_root/29-Netherlands/logfile.txt
+models_root/28-Portugal/logfile.txt
+models_root/267-Macedonia/logfile.txt
+models_root/245-Hungary/logfile.txt
+models_root/240-Georgia/logfile.txt
+models_root/100-Croatia/logfile.txt
+models_root/1-Russia/logfile.txt
+models_root/105-England/logfile.txt
+models_root/104-Hungary/logfile.txt
+models_root/103-Scotland/logfile.txt
+models_root/30-Romania/logfile.txt
+models_root/85-Poland/logfile.txt
+models_root/40-Slovakia/logfile.txt
+/.idea/httpRequests/

@@ -1,0 +1,61 @@
+version: "3"
+services:
+  corsproxy:
+    image: akhilpb001/corsproxy
+    ports:
+      - "1337:1337"
+    deploy:
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 10
+        window: 30s
+
+  API:
+    image: 11api
+    container_name: 11api
+    networks:
+      - nginx_network
+    expose:
+      - 8000
+    ports:
+       - "8000:8111"
+    deploy:
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 10
+        window: 30s
+  FE:
+    image: 11fe
+    ports:
+       - "8080:80"
+    container_name: 11fe
+    networks:
+      - nginx_network
+    expose:
+      - 8080
+    deploy:
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 10
+        window: 30s
+  FE80:
+    image: 11fe
+    ports:
+      - "80:80"
+    container_name: 11fe80
+    networks:
+      - nginx_network
+    expose:
+      - 80
+    deploy:
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 10
+        window: 30s
+networks:
+  nginx_network:
+    driver: bridge
