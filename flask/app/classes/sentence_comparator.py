@@ -51,17 +51,18 @@ class SentenceComparator:
 
     def create_embeddings(self):
         self.embeddings_file = os.path.join(self.saved_files_folder_name, f"embeddings.sentences.npy")
-        self.logger.info("Creating embeddings")
-        self.embeddings = self.embedder.encode_many(self.sentences_df.text.to_list())
-        """
         try:
             self.embeddings = np.load(self.embeddings_file)
             self.logger.info("Loaded embeddings from file")
         except:
             self.logger.info("Creating embeddings")
-            self.embeddings = self.embedder.encode_many(self.sentences_df.text.to_list())
+            list_of_embeddings = (self.sentences_df.text.to_list())
+
+            print([1 for x in self.sentences_df.text.to_list()])
+            print([None for x in list_of_embeddings])
+            self.embeddings = np.array(list_of_embeddings)
+            print(self.embeddings.shape)
             np.save(self.embeddings_file, self.embeddings)
-        """
         self.logger.debug(f"Embeddings shape is {self.embeddings.shape}")
 
     def init_sentence_index(self):

@@ -10,9 +10,6 @@ class SentenceEmbedder:
     def __init__(self):
         self.model = build_model(bert_config)
 
-    def encode_many(self, sentences):
-        return self.model(sentences)
-
     def encode(self, sentence):
         return self.model([sentence])
 
