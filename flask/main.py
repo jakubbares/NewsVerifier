@@ -21,9 +21,9 @@ def after_request(response):
 def hello():
     return "<h1 style='color:blue'>Hello There!</h1>"
 
-@app.route('/analyze', methods=['GET'])
+@app.route('/analyze', methods=['POST'])
 def analyze():
-    return Analysis.test_ner()
+    return Analysis.analyze()
 
 @app.route('/test2', methods=['POST'])
 def test2():

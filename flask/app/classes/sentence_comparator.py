@@ -11,20 +11,23 @@ from app.classes.database import Database
 from app.classes.logger import Logger
 from app.classes.file_loader import FileLoader
 from app.classes.sentence_embedder import SentenceEmbedder
+from app.classes.ner_identifier import NERIdentifier
 
 class SentenceComparator:
     def __init__(self):
+        self.file_name_suffix = "suffix"
         self.logger = Logger("comparator").logger
         self.db = Database()
         self.file_loader = FileLoader()
         self.embedder = SentenceEmbedder()
+        self.ner = NERIdentifier()
         self.saved_files_folder_name = "saved_files"
+        self.loaded_files_folder_name = "saved_files"
 
-    def run(self):
+    def prepare(self):
         self.load_articles()
         self.load_sentences()
         self.create_sentences_df()
-        self.create_embeddings()
         self.init_sentence_index()
         self.add_sentence_vectors(self.sentences)
 
@@ -57,9 +60,6 @@ class SentenceComparator:
         except:
             self.logger.info("Creating embeddings")
             list_of_embeddings = (self.sentences_df.text.to_list())
-
-            print([1 for x in self.sentences_df.text.to_list()])
-            print([None for x in list_of_embeddings])
             self.embeddings = np.array(list_of_embeddings)
             print(self.embeddings.shape)
             np.save(self.embeddings_file, self.embeddings)
@@ -91,5 +91,17 @@ class SentenceComparator:
 
     def vectorize(self, text):
         return np.array([self.embedder.encode(text)]).astype("float32")
+
+    def save_to_files(self):
+        self.sentences_df.to_csv(os.path.join(self.saved_files_folder_name, f"sentences_df.{self.file_name_suffix}"))
+        faiss.write_index(self.sentence_index, os.path.join(self.saved_files_folder_name, f"sentences_index.{self.file_name_suffix}"))
+        with open(os.path.join(self.saved_files_folder_name, f"unique_tags_list.{self.file_name_suffix}"), "w") as fp:
+            json.dump(self.sentences_list, fp)
+
+    def load_from_files(self):
+        self.sentences_df = pd.read_csv(os.path.join(self.loaded_files_folder_name, f"sentences_df.{self.file_name_suffix}"))
+        self.sentence_index = faiss.read_index(os.path.join(self.loaded_files_folder_name, f"sentences_index.{self.file_name_suffix}"))
+        with open(os.path.join(self.loaded_files_folder_name, f"unique_sentences_list.{self.file_name_suffix}"), "r") as fp:
+            self.sentences_list = json.load(fp)
 
 

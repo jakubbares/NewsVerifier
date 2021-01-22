@@ -5,6 +5,7 @@ from app.classes.sentence_comparator import SentenceComparator
 
 ner_identifier = NERIdentifier()
 comparator = SentenceComparator()
+#comparator.prepare()
 
 class Analysis(Resource):
     @staticmethod
@@ -15,5 +16,4 @@ class Analysis(Resource):
 
     @staticmethod
     def analyze():
-
         return json.dumps("Vole")
