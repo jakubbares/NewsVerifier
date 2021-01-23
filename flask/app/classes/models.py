@@ -8,9 +8,11 @@ class Sentence:
         self.article_id = article_id
 
 class Article:
-    def __init__(self, url, sentences):
+    def __init__(self, url, title, text):
         self.id = uuid.uuid4()
         self.url = url
-        self.whole_text = '. '.join(sentences)
-        self.sentences = [Sentence(text, self.id, self.url) for text in sentences]
+        self.title = title
+        self.text = text
 
+    def set_sentences(self, sentences):
+        self.sentences = sentences

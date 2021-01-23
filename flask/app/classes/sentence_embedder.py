@@ -1,19 +1,16 @@
-from deeppavlov.core.common.file import read_json
-from deeppavlov import configs, build_model
-bert_config = read_json(configs.embedder.bert_embedder)
-bert_config['metadata']['variables']['BERT_PATH'] = 'saved_files/slavic_bert'
-
-
-
+from transformers import AutoTokenizer, AutoModel
+import torch
 
 class SentenceEmbedder:
     def __init__(self):
-        self.model = build_model(bert_config)
+        self.tokenizer = AutoTokenizer.from_pretrained("DeepPavlov/bert-base-bg-cs-pl-ru-cased")
+        self.model = AutoModel.from_pretrained("DeepPavlov/bert-base-bg-cs-pl-ru-cased")
 
-    def encode(self, sentence):
-        return self.model([sentence])
+    def tokenize(self, sentence):
+        return self.tokenizer.encode(sentence)
 
-
-
-
-
+    def encode(self, text):
+        input_ids = torch.tensor(self.tokenize(text)).unsqueeze(0)
+        out = self.model(input_ids)
+        hidden = out['last_hidden_state']
+        return hidden.mean(1)

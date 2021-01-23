@@ -10,8 +10,8 @@ import json
 from app.classes.database import Database
 from app.classes.logger import Logger
 from app.classes.file_loader import FileLoader
-from app.classes.sentence_embedder import SentenceEmbedder
 from app.classes.ner_identifier import NERIdentifier
+from app.classes.sentence_embedder import SentenceEmbedder
 from app.classes.helper import flatten
 
 class SentenceComparator:
@@ -31,6 +31,7 @@ class SentenceComparator:
         self.create_sentences_df()
         self.init_sentence_index()
         self.add_sentence_vectors(self.sentences)
+        self.save_to_files()
 
     def test(self):
         for _ind, row in self.sentences_df.iterrows():
@@ -38,8 +39,7 @@ class SentenceComparator:
         print(self.vector_search("Základní školy dostanou vyjímku od vakcíny", 3))
 
     def load_articles(self):
-        article = self.file_loader.load_article()
-        self.articles = [article]
+        self.articles = self.file_loader.load_from_json()
 
     def load_sentences(self):
         self.sentences = [sentence for article in self.articles for sentence in article.sentences]
@@ -51,6 +51,7 @@ class SentenceComparator:
                  "article_url": sentence.article_url, "article_id": sentence.article_id} for sentence in self.sentences]
         sentences_df = pd.DataFrame(rows)
         sentences_df["entities"] = sentences_df["text"].apply(self.ner.extract_entities)
+        #sentences_df["embedding"] = sentences_df["text"].apply(self.embedder.encode)
         self.sentences_df = sentences_df.reset_index(drop = True)
         self.sentences_df["index"] = self.sentences_df.index
 
@@ -63,19 +64,6 @@ class SentenceComparator:
                 else:
                     self.entity_index[entity] = []
                     self.entity_index[entity].append(row["index"])
-
-    def create_embeddings(self):
-        self.embeddings_file = os.path.join(self.saved_files_folder_name, f"embeddings.sentences.npy")
-        try:
-            self.embeddings = np.load(self.embeddings_file)
-            self.logger.info("Loaded embeddings from file")
-        except:
-            self.logger.info("Creating embeddings")
-            list_of_embeddings = (self.sentences_df.text.to_list())
-            self.embeddings = np.array(list_of_embeddings)
-            print(self.embeddings.shape)
-            np.save(self.embeddings_file, self.embeddings)
-        self.logger.debug(f"Embeddings shape is {self.embeddings.shape}")
 
     def init_sentence_index(self):
         self.logger.info("Initializing tags index")
@@ -109,11 +97,15 @@ class SentenceComparator:
         faiss.write_index(self.sentence_index, os.path.join(self.saved_files_folder_name, f"sentences_index.{self.file_name_suffix}"))
         with open(os.path.join(self.saved_files_folder_name, f"unique_tags_list.{self.file_name_suffix}"), "w") as fp:
             json.dump(self.sentences_list, fp)
+        with open(os.path.join(self.saved_files_folder_name, f"entity_inverted_index.{self.file_name_suffix}"), "w") as fp:
+            json.dump(self.entity_index, fp)
 
     def load_from_files(self):
         self.sentences_df = pd.read_csv(os.path.join(self.loaded_files_folder_name, f"sentences_df.{self.file_name_suffix}"))
         self.sentence_index = faiss.read_index(os.path.join(self.loaded_files_folder_name, f"sentences_index.{self.file_name_suffix}"))
         with open(os.path.join(self.loaded_files_folder_name, f"unique_sentences_list.{self.file_name_suffix}"), "r") as fp:
             self.sentences_list = json.load(fp)
+        with open(os.path.join(self.loaded_files_folder_name, f"entity_inverted_index.{self.file_name_suffix}"), "r") as fp:
+            self.entity_index = json.load(fp)
 
 
