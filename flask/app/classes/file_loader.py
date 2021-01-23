@@ -9,13 +9,13 @@ class FileLoader:
 
     def break_to_sentences(self, text):
         doc = self.model(text)
-        return [phrase for phrase in doc._.phrases]
+        return [phrase for phrase in doc.sents]
 
     def load_from_txt(self):
         file = open("saved_files/article.txt").read()
         sentences = [sentence for sentence in file.split("\n") if len(sentence) > 0]
         url = "https://www.idnes.cz/zpravy/domaci/jednani-vlady-prodlouzeni-nouzoveho-stavu-koronavirus-pes.A210122_042925_domaci_kop"
-        article = Article(url, sentences)
+        article = Article(url, "Title", ' '.join(sentences))
         return article
 
     def load_from_json(self):

@@ -29,6 +29,7 @@ class SentenceComparator:
         self.load_articles()
         self.load_sentences()
         self.create_sentences_df()
+        #self.create_entities()
         self.init_sentence_index()
         self.add_sentence_vectors(self.sentences)
         self.save_to_files()
@@ -50,10 +51,14 @@ class SentenceComparator:
         rows = [{"id": sentence.id, "text": sentence.text,
                  "article_url": sentence.article_url, "article_id": sentence.article_id} for sentence in self.sentences]
         sentences_df = pd.DataFrame(rows)
-        sentences_df["entities"] = sentences_df["text"].apply(self.ner.extract_entities)
-        #sentences_df["embedding"] = sentences_df["text"].apply(self.embedder.encode)
         self.sentences_df = sentences_df.reset_index(drop = True)
         self.sentences_df["index"] = self.sentences_df.index
+
+    def create_entities(self):
+        self.sentences_df["entities"] = self.sentences_df["text"].apply(self.ner.extract_entities)
+
+    def create_embeddings(self):
+        self.sentences_df["embedding"] = self.sentences_df["text"].apply(self.embedder.encode)
 
     def create_entity_inverted_index(self):
         self.entity_index = {}
@@ -67,11 +72,10 @@ class SentenceComparator:
 
     def init_sentence_index(self):
         self.logger.info("Initializing tags index")
-        empty_embedding = np.array([self.embedder.encode("")]).astype("float32")
+        empty_embedding = np.array([self.embedder.encode("Vole")]).astype("float32")
         self.sentences_list = []
         self.sentence_index = faiss.IndexFlatL2(empty_embedding.shape[1])
         self.sentence_index = faiss.IndexIDMap(self.sentence_index)
-        self.sentence_index.add_with_ids(empty_embedding, np.array([len(self.sentences_list) - 1]))
 
     def vector_search(self, search_query: str, num_results: int):
         embedding = self.embedder.encode(search_query).astype("float32")
