@@ -18,7 +18,7 @@ export class AnalyzedSentenceComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    console.log(this.sentence);
   }
 }
 

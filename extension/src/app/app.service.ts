@@ -32,12 +32,11 @@ export class AppService {
 
   public execute(update= false) {
     this.loading = true;
-    console.log('PROCESSED', this.processed);
+    console.log('Executed', this.processed);
     chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-      if (update || this.processed) {
-        chrome.tabs.executeScript({file: 'update.js'});
-      } else if (!this.processed) {
+      if (!this.processed) {
         chrome.tabs.executeScript({file: 'content.js'});
+        console.log("Content script executed");
         this.processed = true;
       }
       chrome.tabs.executeScript(
@@ -51,9 +50,9 @@ export class AppService {
     this.db.collection('articles', ref => ref.where('url', '==', article.url )).get()
       .subscribe((docSnapshot) => {
         if (docSnapshot.empty) {
-          this.addArticle(article, paragraphs, _ => {
+          /*this.addArticle(article, paragraphs, _ => {
             console.log('Article added');
-          });
+          });*/
         }
       });
   }

@@ -10,7 +10,7 @@ import {AnalyzedSentence} from "../../helper/classes";
         <div class="domain">{{sentence.article_url}}</div>
         <div class="score">{{sentence.score}}</div>
       </div>
-      <div class="text">{{sentence.text.substr(0, 40)}}</div>
+      <div class="text">{{sentence.text}}</div>
     </div>
   `
 })

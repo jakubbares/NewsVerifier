@@ -3,8 +3,8 @@ export class AnalyzedSentence {
   article_url: string;
   score = 90;
   mark = "A+";
-  shown = Math.round(Math.random());
-  comparedSentences: AnalyzedSentence[] = [];
+  shown = true;
+  comparedSentences: AnalyzedSentence[] = [new AnalyzedSentence("VOLE", "FHIUASDFHIUA FHQWFNIHUAVH UIAHCVACAWDOIUCAJSDO")];
 
   constructor(article_url, text) {
     this.article_url = article_url;
