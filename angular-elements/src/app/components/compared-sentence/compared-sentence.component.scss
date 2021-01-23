@@ -1,6 +1,6 @@
 .block {
   margin-left: 15px;
-  width: 600PX;
+  width: 530px;
   border: 1px solid darkgray;
   margin-bottom: 8px;
 }
@@ -10,15 +10,23 @@
   justify-content: space-between;
   flex-direction: row;
   font-size: 16px;
-  font-family: DecisoRegularItalic;
 }
 
 .domain {
   font-weight: bold;
 }
 
+.mark {
+  border-radius: 100px;
+  width: 30px;
+  height: 30px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
 .text {
   font-size: 14px;
-  font-family: DecisoRegularItalic;
   margin-bottom: 1px;
 }

@@ -19,11 +19,13 @@ class FileLoader:
         return article
 
     def load_from_json(self):
-        file = open("saved_files/denikreferendum.json")
-        articles = [Article(j["url"], j["name"], j["text"]) for j in json.load(file)]
+        sputnik = open("saved_files/sputnik.json")
+        denikreferendum = open("saved_files/denikreferendum.json")
+        articles_s = [Article(j["url"], j["name"], j["text"]) for j in json.load(sputnik)]
+        articles_r = [Article(j["url"], j["name"], j["text"]) for j in json.load(denikreferendum)]
         results = []
-        for article in articles:
-            sentences = [Sentence(phrase, article.id, article.url) for phrase in self.break_to_sentences(article.text)]
+        for article in articles_s + articles_r:
+            sentences = [Sentence(phrase.text, article.id, article.url) for phrase in self.break_to_sentences(article.text)]
             article.set_sentences(sentences)
             results.append(article)
         return results

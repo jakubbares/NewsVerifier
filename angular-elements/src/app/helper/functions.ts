@@ -1,3 +1,5 @@
+import {colorScale} from "./classes";
+
 
 function add0IfNecessary(num) {
   const str = num.toString();
@@ -16,4 +18,8 @@ export function newSQLDate() {
 
 export function replaceSymbols(text: string) {
   return text.replace(/&quot;/g, '"');
+}
+
+export function colorScore(score) {
+  return colorScale(score);
 }

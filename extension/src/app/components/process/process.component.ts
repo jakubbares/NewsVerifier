@@ -1,7 +1,7 @@
 import {Component, ElementRef, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {AppService} from '../../app.service';
 import {ContentProcessor} from '../../../helper/content-processor';
-import {Article} from '../../../helper/classes';
+import {Article, ComparedSentence, Sentence} from '../../../helper/classes';
 import {AuthService} from '../../auth.service';
 import {TranslateService} from '../../translate.service';
 import {APIService} from "../../api.service";
@@ -39,8 +39,10 @@ export class ProcessComponent {
     const article = { title, url };
     this.api.getAnalysis({title, sentences: processor.sentences}).subscribe((data: any) => {
       console.log("MESSAGE", data);
-      const sentences = processor.sentences.map(sent => {
-        sent.setComparedSentences()
+      const sentences = data.sentences.map((sent: any) => {
+        const sentence = new Sentence("P", sent.text, url);
+        const compared = sent.compared.map(s => new ComparedSentence(s.text, Math.random() * 100, s.url));
+        sentence.setComparedSentences(compared);
         return sent;
       });
       sendResponse({sentences, article, userId: 1  }); // this.auth.user.uid

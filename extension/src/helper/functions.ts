@@ -1,5 +1,11 @@
 import {Word} from './classes';
 
+export function extractDomain(url: string) {
+  const re = new RegExp('[a-z0-9]+\.(cz|com)');
+  const match = url.match(re);
+  return match.length ? match[0] : url;
+}
+
 export function capitalizeField(field) {
   return field[0].toUpperCase() + field.slice(1).replace(/_/g, ' ');
 }
