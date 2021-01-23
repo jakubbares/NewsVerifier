@@ -18,14 +18,14 @@ class SentenceEmbedder:
         tensors_tuple = self.model(input_ids)
         print(tensors_tuple)
         if pooled:
-            return tensors_tuple[1]
+            return tensors_tuple[1].squeeze().detach().numpy()
         else:
-            return tensors_tuple[0].mean(1)
+            return tensors_tuple[0].mean(1).squeeze().detach().numpy()
 
     def encode_many(self, sentences, pooled=False, max_length=None):
         input_ids = torch.tensor(self.tokenize_batch(sentences, max_length=max_length))
         out = self.model(input_ids)
         if pooled:
-            return out['pooler_output']
+            return out['pooler_output'].squeeze().detach().numpy()
         else:
-            return out['last_hidden_state'].mean(1)
+            return out['last_hidden_state'].mean(1).squeeze().detach().numpy()
