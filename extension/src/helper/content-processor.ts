@@ -70,6 +70,8 @@ export class ContentProcessor {
     const before = this.divsBefore(divs, indexLongest);
     this.title = this.getTitle(before);
     this.elements = [...before, ...Array.from((divs[indexLongest] as HTMLElement)
+      //sputnik processor ?
+      //.querySelectorAll('div.b-article__text p', 'div.b-article__lead p'))];
       .querySelectorAll('p, span, h1, h2, h3, h4, h5, h6'))];
     return this.elements;
   }
