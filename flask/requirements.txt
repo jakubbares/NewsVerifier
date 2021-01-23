@@ -15,4 +15,5 @@ Unidecode==1.1.2
 newspaper3k==0.2.8
 deeppavlov==0.14.0
 firebase-admin==2.13.0
+transformers==4.2.2
 
