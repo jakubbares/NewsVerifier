@@ -39,7 +39,7 @@ export class AppComponent implements OnChanges {
   }
   @Input('sentences')
   set sentencesJSON(json: string) {
-    console.log('Setter');
+    console.log('Setter sent');
     this._sentences = JSON.parse(json);
   }
   @Input('uid')
@@ -51,16 +51,16 @@ export class AppComponent implements OnChanges {
   constructor(
     private firestore: FireStoreService,
     private api: APIService
-              ) {
+  ) {
     window['app'] = this;
-    this.firestore.addArticle(window.location.href, (success) => {
+    /*this.firestore.addArticle(window.location.href, (success) => {
       console.log('Article saved');
     });
     this.sentences.forEach(sentence => {
       this.firestore.addSentence(sentence, (success) => {
         console.log('Sentences saved');
       });
-    });
+    });*/
     this.api.getAnalysis({title: this.article.title, sentences: this.sentences});
   }
 
