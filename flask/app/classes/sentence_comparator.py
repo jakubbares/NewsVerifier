@@ -39,7 +39,7 @@ class SentenceComparator:
 
     def load_articles(self):
         article = self.file_loader.load_article()
-        self.articles  = [article]
+        self.articles = [article]
 
     def load_sentences(self):
         self.sentences = [sentence for article in self.articles for sentence in article.sentences]
