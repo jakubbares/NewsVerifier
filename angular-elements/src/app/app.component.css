@@ -10,6 +10,7 @@
 }
 
 .fixed-wrapper {
+  font-family: Roboto;
   background-color: rgba(110,130,130,.75) !important;
   position: fixed;
   right: 0;
@@ -22,13 +23,13 @@
 
 .wrapper {
   height: auto;
-  position: fixed;
+  position: relative;
   right: 0;
   left: 0;
-  top: 20%;
+  top: 8%;
   margin: auto;
-  min-width: 80%;
-  max-width: 800px;
+  min-width: 70%;
+  max-width: 700px;
   display: flex;
   overflow-y: scroll;
   flex-direction: column;

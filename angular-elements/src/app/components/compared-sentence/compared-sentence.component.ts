@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import {AnalyzedSentence} from "../../helper/classes";
+import {colorScore} from "../../helper/functions";
 
 @Component({
   selector: 'app-compared-sentence',
@@ -7,8 +8,8 @@ import {AnalyzedSentence} from "../../helper/classes";
   template: `
     <div class="block">
       <div class="header">
-        <div class="domain">{{sentence.article_url}}</div>
-        <div class="score">{{sentence.score}}</div>
+        <div class="domain">{{sentence.domain}}</div>
+        <div class="mark" [style.background]="colorScore(sentence.score)">{{sentence.mark}}</div>
       </div>
       <div class="text">{{sentence.text}}</div>
     </div>
@@ -16,6 +17,7 @@ import {AnalyzedSentence} from "../../helper/classes";
 })
 export class ComparedSentenceComponent implements OnInit {
   @Input('sentence') sentence: AnalyzedSentence;
+  colorScore = colorScore;
   constructor() {
     window['sent'] = this;
   }

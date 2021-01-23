@@ -10,7 +10,7 @@ class ArticleDownloader:
     def download(self):
         self.article.download()
         self.article.parse()
-        print(self.article.text)
+
 
 
 

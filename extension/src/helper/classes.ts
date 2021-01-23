@@ -1,4 +1,4 @@
-import {processUrl} from './functions';
+import {processUrl, extractDomain} from './functions';
 
 export interface Language {
   short: string;
@@ -48,6 +48,37 @@ export class UserData {
   }
 }
 
+export class ComparedSentence {
+  text: string;
+  articleUrl: string;
+  domain: string;
+  score: number;
+  mark: string;
+
+  constructor(text, score, articleUrl) {
+    this.score = score;
+    this.text = text;
+    this.articleUrl = articleUrl;
+    this.assingMark(score);
+    this.assignDomain(articleUrl);
+  }
+
+  assignDomain(url) {
+    this.domain = extractDomain(url);
+  }
+
+  assingMark(score) {
+    const inRange = Math.round(score  / 100);
+    if (inRange < 0.33) {
+      this.mark = "C";
+    } else if (inRange < 0.66) {
+      this.mark = "B";
+    } else {
+      this.mark = "A";
+    }
+  }
+}
+
 export class Sentence {
   tag: string;
   articleUrl: string;
@@ -56,7 +87,7 @@ export class Sentence {
   order: number;
   className: string;
   styleCSS: string;
-  comparedSentences: Sentence[] = [];
+  comparedSentences: ComparedSentence[] = [];
 
   constructor(tag, text, articleUrl) {
     this.articleUrl = articleUrl;
@@ -67,8 +98,8 @@ export class Sentence {
 
   setComparedSentences() {
     this.comparedSentences = [
-      new Sentence("P", "aaa sfw csdsvwwsd", "http"),
-      new Sentence("P", "iojsdva acsadjkncanocowqcds csdsd", "http")
+      new ComparedSentence("aaa sfw csdsvwwsd", 60, "https://www.idnes.cz/zpravy/domaci/vladimir-cerny-rozhovor-nemocnice-hospitalizovane-lide-luzka-covid-19-koronavirus.A210120_152203_domaci_lre?zdroj=otvirak"),
+      new ComparedSentence("iojsdva acsadjkncanocowqcds csdsd", 30, "https://www.idnes.cz/zpravy/domaci/vladimir-cerny-rozhovor-nemocnice-hospitalizovane-lide-luzka-covid-19-koronavirus.A210120_152203_domaci_lre?zdroj=otvirak")
     ];
   }
 

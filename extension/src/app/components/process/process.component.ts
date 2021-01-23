@@ -39,8 +39,8 @@ export class ProcessComponent {
     const article = { title, url };
     this.api.getAnalysis({title, sentences: processor.sentences}).subscribe((data: any) => {
       console.log("MESSAGE", data);
-      const sentences = processor.sentences.map(sent => {
-        sent.setComparedSentences()
+      const sentences = data.sentences.map(sent => {
+        sent.setComparedSentences();
         return sent;
       });
       sendResponse({sentences, article, userId: 1  }); // this.auth.user.uid

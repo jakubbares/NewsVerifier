@@ -1,6 +1,10 @@
 .block {
-  width: 650PX;
+  display: flex;
+  width: 630px;
   border: 1px darkgray;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .header {
@@ -8,10 +12,6 @@
   justify-content: space-between;
   flex-direction: row;
   font-size: 20px;
-}
-
-.domain {
-  font-weight: bold;
 }
 
 .text {

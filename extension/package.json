@@ -23,6 +23,7 @@
     "@angular/platform-browser-dynamic": "~8.2.14",
     "@angular/router": "~8.2.14",
     "bootstrap": "^4.0.0-alpha.6",
+    "extract-domain": "^2.2.1",
     "firebase": "^7.11.0",
     "font-awesome": "^4.7.0",
     "primeng": "^8.1.1",
