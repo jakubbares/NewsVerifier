@@ -10,8 +10,7 @@ RUN apt-get update \
 # Installing dependencies
 COPY ./tagger/requirements.txt ./requirements.txt
 RUN pip install -r /requirements.txt
-RUN python -m deeppavlov install bert_sentence_embedder
-
+RUN python -m spacy download en_core_web_lg
 
 # Copying the source code to
 RUN mkdir /app

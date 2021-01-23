@@ -4,6 +4,7 @@ import {ContentProcessor} from '../../../helper/content-processor';
 import {Article} from '../../../helper/classes';
 import {AuthService} from '../../auth.service';
 import {TranslateService} from '../../translate.service';
+import {APIService} from "../../api.service";
 
 @Component({
   selector: 'app-process',
@@ -12,7 +13,7 @@ import {TranslateService} from '../../translate.service';
 })
 export class ProcessComponent {
   constructor(public service: AppService,
-              private translate: TranslateService,
+              private api: APIService,
               private auth: AuthService) {
     window['process'] = this;
     chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -34,10 +35,16 @@ export class ProcessComponent {
     const processor = new ContentProcessor(innerHTML, url, pageTitle);
     const { textClass, title } = processor;
     const articleToProcess = new Article(url, title, textClass);
-    console.log('PARS', processor.sentences);
     this.service.saveArticleIfNew(articleToProcess, processor.sentences);
     const article = { title, url };
-    sendResponse({sentences: processor.sentences, article, userId: 1  }); // this.auth.user.uid
+    this.api.getAnalysis({title, sentences: processor.sentences}).subscribe((data: any) => {
+      console.log("MESSAGE", data);
+      const sentences = processor.sentences.map(sent => {
+        sent.setComparedSentences()
+        return sent;
+      });
+      sendResponse({sentences, article, userId: 1  }); // this.auth.user.uid
+    });
   }
 }
 

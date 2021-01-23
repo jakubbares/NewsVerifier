@@ -5,7 +5,7 @@ import {Article} from "../../helper/classes";
   selector: 'app-header',
   styleUrls: ['./header.component.scss'],
   template: `
-    <div class="header">Analýza článku "{{article.title}}"</div>
+    <div class="header">"{{article.title}}"</div>
   `
 })
 export class HeaderComponent implements OnInit {

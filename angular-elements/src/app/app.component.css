@@ -14,19 +14,23 @@
   position: fixed;
   right: 0;
   left: 0;
-  top: 20%;
-  margin: auto;
-  min-width: 80%;
-  max-width: 800px;
-  width: auto;
-  overflow-y: scroll;
+  top: 0;
+  height: 100%;
+  width: 100%;
   z-index: 9999999999999999;
 }
 
 .wrapper {
   height: auto;
-  position: relative;
+  position: fixed;
+  right: 0;
+  left: 0;
+  top: 20%;
+  margin: auto;
+  min-width: 80%;
+  max-width: 800px;
   display: flex;
+  overflow-y: scroll;
   flex-direction: column;
-  background-color: inherit;
+  background-color: white;
 }

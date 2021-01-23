@@ -14,9 +14,9 @@ function createContent({sentences, article, userId}) {
   el.setAttribute('article', JSON.stringify(article));
   const base = document.getElementsByTagName("body")[0];
   try {
-    base.innerHTML = el.outerHTML;
+    document.body.appendChild(el);
   } catch (e) {
-    // console.log(e);
+    console.log(e);
   }
 }
 

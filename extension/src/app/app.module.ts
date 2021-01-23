@@ -19,6 +19,7 @@ import {ProcessComponent} from './components/process/process.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatSelectModule} from '@angular/material/select';
 import {firebaseConfig} from "./credentials";
+import {APIService} from "./api.service";
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import {firebaseConfig} from "./credentials";
   ],
   providers: [
     AppService,
+    APIService,
     AuthService,
     AngularFireAuth,
     TranslateService

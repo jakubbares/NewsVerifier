@@ -1,7 +1,7 @@
 import {Component, Input, ViewEncapsulation, OnInit, OnChanges, AfterViewInit} from '@angular/core';
 import {AnalyzedSentence, Article} from './helper/classes';
 import {FireStoreService} from "./firestore.service";
-import {APIService} from "./api.service";
+
 
 @Component({
   selector: 'app-content',
@@ -12,8 +12,8 @@ import {APIService} from "./api.service";
       <div class="wrapper">
         <app-header [article]="article"></app-header>
         <div *ngFor="let sentence of sentences" class="sentences-container">
-          <app-analyzed-sentence *ngIf="sentence.shown" [sentence]="sentence"></app-analyzed-sentence>
-          <div *ngIf="!sentence.shown" class="dot"></div>
+          <app-analyzed-sentence [sentence]="sentence"></app-analyzed-sentence>
+          <!--<div *ngIf="!sentence.shown" class="dot"></div>-->
         </div>
       </div>
     </div>
@@ -34,23 +34,19 @@ export class AppComponent implements OnChanges {
   }
   @Input('article')
   set articleJSON(json: string) {
-    console.log('Setter');
     this._article = JSON.parse(json);
   }
   @Input('sentences')
   set sentencesJSON(json: string) {
-    console.log('Setter sent');
     this._sentences = JSON.parse(json);
   }
   @Input('uid')
   set uid(uid: string) {
-    console.log('Setter uid');
     this._uid = uid;
   }
 
   constructor(
-    private firestore: FireStoreService,
-    private api: APIService
+    private firestore: FireStoreService
   ) {
     window['app'] = this;
     /*this.firestore.addArticle(window.location.href, (success) => {
@@ -61,7 +57,7 @@ export class AppComponent implements OnChanges {
         console.log('Sentences saved');
       });
     });*/
-    this.api.getAnalysis({title: this.article.title, sentences: this.sentences});
+
   }
 
   ngOnChanges() {

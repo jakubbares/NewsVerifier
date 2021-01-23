@@ -10,6 +10,7 @@ class NERIdentifier:
 
     def extract_entities(self, sentence):
         result = self.model(sentence)
+        print(result)
         words = result[0][0]
         entities = result[1][0]
         return [word for word, entity in zip(words, entities) if self.shorten(entity) in self.useful_entities]
