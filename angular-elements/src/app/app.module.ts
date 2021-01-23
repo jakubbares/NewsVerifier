@@ -11,6 +11,7 @@ import {FireStoreService} from "./firestore.service";
 import {ComparedSentenceComponent} from "./components/compared-sentence/compared-sentence.component";
 import {AnalyzedSentenceComponent} from "./components/analyzed-sentence/analyzed-sentence.component";
 import {HeaderComponent} from "./components/header/header.component";
+import {APIService} from "./api.service";
 
 @NgModule({
   declarations: [
@@ -24,7 +25,10 @@ import {HeaderComponent} from "./components/header/header.component";
     AngularFirestoreModule.enablePersistence(),
     BrowserModule,
     HttpClientModule],
-  providers: [FireStoreService],
+  providers: [
+    FireStoreService,
+    APIService,
+  ],
   entryComponents: [
     AppComponent,
     ComparedSentenceComponent,

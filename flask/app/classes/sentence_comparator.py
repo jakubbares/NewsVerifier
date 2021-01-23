@@ -12,6 +12,7 @@ from app.classes.logger import Logger
 from app.classes.file_loader import FileLoader
 from app.classes.sentence_embedder import SentenceEmbedder
 from app.classes.ner_identifier import NERIdentifier
+from app.classes.helper import flatten
 
 class SentenceComparator:
     def __init__(self):
@@ -38,7 +39,7 @@ class SentenceComparator:
 
     def load_articles(self):
         article = self.file_loader.load_article()
-        self.articles  = [article]
+        self.articles = [article]
 
     def load_sentences(self):
         self.sentences = [sentence for article in self.articles for sentence in article.sentences]
@@ -49,8 +50,19 @@ class SentenceComparator:
         rows = [{"id": sentence.id, "text": sentence.text,
                  "article_url": sentence.article_url, "article_id": sentence.article_id} for sentence in self.sentences]
         sentences_df = pd.DataFrame(rows)
+        sentences_df["entities"] = sentences_df["text"].apply(self.ner.extract_entities)
         self.sentences_df = sentences_df.reset_index(drop = True)
         self.sentences_df["index"] = self.sentences_df.index
+
+    def create_entity_inverted_index(self):
+        self.entity_index = {}
+        for _ind, row in self.sentences_df.iterrows():
+            for entity in row["entities"]:
+                if entity in self.entity_index:
+                    self.entity_index[entity].append(row["index"])
+                else:
+                    self.entity_index[entity] = []
+                    self.entity_index[entity].append(row["index"])
 
     def create_embeddings(self):
         self.embeddings_file = os.path.join(self.saved_files_folder_name, f"embeddings.sentences.npy")

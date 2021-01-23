@@ -25,9 +25,9 @@ def hello():
 def analyze():
     return Analysis.analyze()
 
-@app.route('/test2', methods=['POST'])
+@app.route('/test', methods=['GET'])
 def test2():
-    return
+    return Analysis.test_ner()
 
 
 
