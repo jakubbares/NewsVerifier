@@ -35,13 +35,15 @@ export class ProcessComponent {
     const processor = new ContentProcessor(innerHTML, url, pageTitle);
     const { textClass, title } = processor;
     const articleToProcess = new Article(url, title, textClass);
-    const sentences = processor.sentences.filter(par => par.tag === "P");
-    console.log('PARS', sentences);
-    this.service.saveArticleIfNew(articleToProcess, sentences);
+    this.service.saveArticleIfNew(articleToProcess, processor.sentences);
     const article = { title, url };
-    this.api.getAnalysis({title, sentences}).subscribe((data: any) => {
+    this.api.getAnalysis({title, sentences: processor.sentences}).subscribe((data: any) => {
       console.log("MESSAGE", data);
-      sendResponse({sentences: sentences, article, userId: 1  }); // this.auth.user.uid
+      const sentences = processor.sentences.map(sent => {
+        sent.setComparedSentences()
+        return sent;
+      });
+      sendResponse({sentences, article, userId: 1  }); // this.auth.user.uid
     });
   }
 }

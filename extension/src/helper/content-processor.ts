@@ -32,14 +32,14 @@ export class ContentProcessor {
     const { entry, className } = this.extract(element);
     this.tokenizer.processEntry(entry);
     this.tokenizer.sentences.forEach((sentence: string) => {
-      const paragraph = new Sentence(element.tagName, sentence, className, this.url );
+      const paragraph = new Sentence(element.tagName, sentence, this.url );
       this.sentences.push(paragraph);
     });
   }
 
   handleOther(element) {
     const { entry, className } = this.extract(element);
-    const paragraph = new Sentence(element.tagName, entry, className, this.url);
+    const paragraph = new Sentence(element.tagName, entry, this.url);
     this.sentences.push(paragraph);
   }
 
@@ -59,7 +59,7 @@ export class ContentProcessor {
       this.processElement(element);
     });
     this.sentences = this.sentences.map((par, index) => {
-      par.setOther(index + 1, false);
+      par.setOther(index + 1);
       return par;
     });
   }

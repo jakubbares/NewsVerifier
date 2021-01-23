@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {environment} from '../environments/environment';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Article, DetectResponseBody, Sentence, ReadenceAPITranslation, TranslationResponseBody, Word} from '../helper/classes';
+import {Article, Sentence, Word} from '../helper/classes';
 import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
 import {Observable} from 'rxjs';
 import {TranslateService} from './translate.service';

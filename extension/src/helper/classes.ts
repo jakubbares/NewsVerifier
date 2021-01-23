@@ -54,48 +54,31 @@ export class Sentence {
   text: string;
   versions: any;
   order: number;
-  language: string;
-  translated: boolean;
-  translation: string;
   className: string;
   styleCSS: string;
+  comparedSentences: Sentence[] = [];
 
-  constructor(tag, text, className, articleUrl) {
+  constructor(tag, text, articleUrl) {
     this.articleUrl = articleUrl;
-    this.className = className;
     this.versions = {};
     this.tag = tag;
     this.text = text;
-    this.translation = '';
   }
 
-  setOther(order, translated= false) {
+  setComparedSentences() {
+    this.comparedSentences = [
+      new Sentence("P", "aaa sfw csdsvwwsd", "http"),
+      new Sentence("P", "iojsdva acsadjkncanocowqcds csdsd", "http")
+    ];
+  }
+
+
+  setOther(order) {
     this.order = order;
-    this.translated = translated;
-  }
-
-  setLanguage(language) {
-    this.language = language;
-    this.versions[language] = this.text;
-  }
-
-  setTranslation(language, translation) {
-    this.translation = translation;
-    this.versions[language] = translation;
   }
 
   setStyleCSS(css) {
     this.styleCSS = css;
-  }
-
-  reverseLanguage(detectedLanguage, targetLanguage, translation) {
-    const text = this.text;
-    this.translated = true;
-    this.text = translation;
-    this.translation = text;
-    this.language = targetLanguage;
-    this.versions[targetLanguage] = translation;
-    this.versions[detectedLanguage] = text;
   }
 }
 
@@ -119,45 +102,4 @@ export class Article {
     this.titles[language] = this.title;
     this.language = language;
   }
-
-  setTranslation(translatedTitle: string, targetLanguage: string) {
-    this.titles[targetLanguage] = translatedTitle;
-  }
-
-  reverseLanguage(translatedTitle: string, targetLanguage: string) {
-    this.translated = true;
-    this.language = targetLanguage;
-    this.title = translatedTitle;
-    this.setTranslation(translatedTitle, targetLanguage);
-  }
-}
-
-export interface ReadenceAPITranslation {
-  translations: string[];
-}
-
-export interface TranslationResponseBody {
-  data: TranslationResponseList;
-}
-
-export interface DetectResponseBody {
-  data: DetectLanguageResponseList;
-}
-
-export interface TranslationResponseList {
-  translations: TranslatedText[];
-}
-
-export interface TranslatedText {
-  translatedText: string;
-}
-
-
-export interface DetectLanguageResponseList {
-  detections: Detection[];
-}
-
-interface Detection {
-  language: string;
-  confidence: number;
 }

@@ -34,18 +34,14 @@ export class AppComponent implements OnChanges {
   }
   @Input('article')
   set articleJSON(json: string) {
-    console.log('Setter');
     this._article = JSON.parse(json);
-    console.log(this._article);
   }
   @Input('sentences')
   set sentencesJSON(json: string) {
-    console.log('Setter sent');
     this._sentences = JSON.parse(json);
   }
   @Input('uid')
   set uid(uid: string) {
-    console.log('Setter uid');
     this._uid = uid;
   }
 
