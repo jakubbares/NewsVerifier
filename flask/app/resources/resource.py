@@ -1,3 +1,4 @@
+from flask import Blueprint, request, jsonify, make_response
 from flask_restful import Api, Resource
 import json
 from app.classes.ner_identifier import NERIdentifier
@@ -16,4 +17,7 @@ class Analysis(Resource):
 
     @staticmethod
     def analyze():
+        raw_dict = request.get_json(force=True)
+        for query_sentence in raw_dict["sentences"]:
+            comparator.vector_search(query_sentence, num_results=5)
         return json.dumps("Vole")
