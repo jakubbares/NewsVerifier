@@ -36,10 +36,16 @@ class SentenceComparator:
         self.add_sentence_vectors(self.sentences)
         self.save_to_files()
 
+    def process_df(self):
+        self.sentences_df = pd.read_csv(os.path.join(self.loaded_files_folder_name, f"sentences_df.{self.file_name_suffix}"))
+        self.init_sentence_index()
+        self.add_sentence_vectors_from_df()
+        self.save_to_files()
 
     def test(self):
         self.load_from_files()
-        print(self.vector_search("Základní školy dostanou vyjímku od vakcíny", 3))
+        self.add_sentence_vectors_from_df_row()
+        #print(self.vector_search("Základní školy dostanou vyjímku od vakcíny", 3))
 
     def load_articles(self):
         self.articles = self.file_loader.load_from_json()
@@ -77,8 +83,8 @@ class SentenceComparator:
     def init_sentence_index(self):
         self.logger.info("Initializing sentence index")
         empty_embedding = np.array([self.embedder.encode("Vole")]).astype("float32")
-        print(empty_embedding.shape[1])
         self.sentences_list = []
+        print(empty_embedding.shape[1])
         self.sentence_index = faiss.IndexFlatL2(empty_embedding.shape[1])
         self.sentence_index = faiss.IndexIDMap(self.sentence_index)
 
@@ -87,17 +93,25 @@ class SentenceComparator:
         other = np.array(embedding)
         other = other[None]
         D, I = self.sentence_index.search(other, k=num_results)
-        result = [self.sentences_df.loc[self.sentences_df["index"] == i, "text"] for i in I.tolist()[0]]
+        #result = [{"text": self.sentences_df.loc[self.sentences_df["index"] == i, "text"].iloc[0], "score": score} for score, i in zip(D.tolist()[0], I.tolist()[0])]
+        result = [{"text": self.sentences_df.iloc[i]["text"], "score": score} for score, i in zip(D.tolist()[0], I.tolist()[0])]
         return result
+
 
     def add_sentence_vectors(self, sentences):
         for sentence in sentences:
             self.add_sentence_vector_to_index(sentence.text)
 
-    def add_sentence_vectors_from_df(self, sentence):
+    def add_sentence_vectors_from_df_row(self):
         for _ind, row in self.sentences_df.iterrows():
-            self.sentences_list.append(row["text"])
-            self.sentence_index.add_with_ids(row["embedding"], np.array([_ind]))
+            emb_matrix = np.ascontiguousarray(row.iloc[8:], dtype=np.float32)
+            print(_ind, row['index'].values)
+            print(emb_matrix.shape)
+            self.sentence_index.add_with_ids(emb_matrix[0], row['index'].values)
+
+    def add_sentence_vectors_from_df(self):
+        emb_matrix = np.ascontiguousarray(self.sentences_df.iloc[:,8:], dtype=np.float32)
+        self.sentence_index.add_with_ids(emb_matrix, self.sentences_df.index.values)
 
     def add_sentence_vector_to_index(self, sentence):
         index = len(self.sentences_list) - 1

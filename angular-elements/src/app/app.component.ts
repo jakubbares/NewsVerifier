@@ -39,6 +39,7 @@ export class AppComponent implements OnChanges {
   @Input('sentences')
   set sentencesJSON(json: string) {
     this._sentences = JSON.parse(json);
+    console.log(this._sentences);
   }
   @Input('uid')
   set uid(uid: string) {

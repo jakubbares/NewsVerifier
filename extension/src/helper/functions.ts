@@ -2,8 +2,13 @@ import {Word} from './classes';
 
 export function extractDomain(url: string) {
   const re = new RegExp('[a-z0-9]+\.(cz|com)');
-  const match = url.match(re);
-  return match.length ? match[0] : url;
+  try {
+    const match = url.match(re);
+    return  match[0];
+  } catch (e) {
+    console.log(e);
+    return url;
+  }
 }
 
 export function capitalizeField(field) {

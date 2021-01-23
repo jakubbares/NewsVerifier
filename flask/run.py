@@ -3,7 +3,11 @@ from app.classes.file_loader import FileLoader
 from app.classes.ner_identifier import NERIdentifier
 
 comp = SentenceComparator()
-comp.prepare()
+comp.process_df()
+
+
+#comp.load_from_files()
+#comp.test_vectors()
 
 
 

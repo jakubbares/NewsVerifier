@@ -21,10 +21,9 @@ class Analysis(Resource):
         results = []
         raw_dict = request.get_json(force=True)
         for query_sentence in raw_dict["sentences"]:
-            result = comparator.vector_search(query_sentence['text'], num_results=5)
+            result = comparator.vector_search(query_sentence['text'], num_results=3)
             print(result)
-            item = {"text": query_sentence["text"], "compared": result.tolist()}
-            print(item)
+            item = {"text": query_sentence["text"], "compared": result, "url": "" }
             results.append(item)
         return json.dumps({"sentences": results})
 

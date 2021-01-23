@@ -37,13 +37,15 @@ export class ProcessComponent {
     const articleToProcess = new Article(url, title, textClass);
     this.service.saveArticleIfNew(articleToProcess, processor.sentences);
     const article = { title, url };
-    this.api.getAnalysis({title, sentences: processor.sentences}).subscribe((data: any) => {
+    this.api.getAnalysis({title, sentences: processor.sentences.slice(3, 7)}).subscribe((data: any) => {
       console.log("MESSAGE", data);
       const sentences = data.sentences.map((sent: any) => {
+        console.log(sent);
         const sentence = new Sentence("P", sent.text, url);
-        const compared = sent.compared.map(s => new ComparedSentence(s.text, Math.random() * 100, s.url));
+        const compared = sent.compared.map(s => new ComparedSentence(s.text, s.score, s.url));
+        console.log(compared);
         sentence.setComparedSentences(compared);
-        return sent;
+        return sentence;
       });
       sendResponse({sentences, article, userId: 1  }); // this.auth.user.uid
     });
