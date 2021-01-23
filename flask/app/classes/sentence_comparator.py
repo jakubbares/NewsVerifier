@@ -29,8 +29,10 @@ class SentenceComparator:
         self.load_articles()
         self.load_sentences()
         self.create_sentences_df()
+        self.save_to_files()
         #self.create_entities()
         self.init_sentence_index()
+        self.add_sentence_vectors_from_df()
         self.add_sentence_vectors(self.sentences)
         self.save_to_files()
 
@@ -92,6 +94,11 @@ class SentenceComparator:
         for sentence in sentences:
             self.add_sentence_vector_to_index(sentence.text)
 
+    def add_sentence_vectors_from_df(self, sentence):
+        for _ind, row in self.sentences_df.iterrows():
+            self.sentences_list.append(row["text"])
+            self.sentence_index.add_with_ids(row["embedding"], np.array([_ind]))
+
     def add_sentence_vector_to_index(self, sentence):
         index = len(self.sentences_list) - 1
         vector = self.vectorize(sentence)
@@ -102,6 +109,7 @@ class SentenceComparator:
         return np.array([self.embedder.encode(text)]).astype("float32")
 
     def save_to_files(self):
+        self.logger.info("Saving to files")
         self.sentences_df.to_csv(os.path.join(self.saved_files_folder_name, f"sentences_df.{self.file_name_suffix}"))
         faiss.write_index(self.sentence_index, os.path.join(self.saved_files_folder_name, f"sentences_index.{self.file_name_suffix}"))
         with open(os.path.join(self.saved_files_folder_name, f"unique_sentences_list.{self.file_name_suffix}"), "w") as fp:

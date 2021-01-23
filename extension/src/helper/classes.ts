@@ -96,11 +96,8 @@ export class Sentence {
     this.text = text;
   }
 
-  setComparedSentences() {
-    this.comparedSentences = [
-      new ComparedSentence("aaa sfw csdsvwwsd", 60, "https://www.idnes.cz/zpravy/domaci/vladimir-cerny-rozhovor-nemocnice-hospitalizovane-lide-luzka-covid-19-koronavirus.A210120_152203_domaci_lre?zdroj=otvirak"),
-      new ComparedSentence("iojsdva acsadjkncanocowqcds csdsd", 30, "https://www.idnes.cz/zpravy/domaci/vladimir-cerny-rozhovor-nemocnice-hospitalizovane-lide-luzka-covid-19-koronavirus.A210120_152203_domaci_lre?zdroj=otvirak")
-    ];
+  setComparedSentences(compared) {
+    this.comparedSentences = compared;
   }
 
 
